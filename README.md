@@ -1,6 +1,6 @@
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/) ![codecov](https://codecov.io/gh/yiss/mobx_hooks/branch/master/graph/badge.svg) ![Build](https://github.com/yiss/mobx_hooks/workflows/Build/badge.svg)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/) [![codecov](https://codecov.io/gh/yiss/mobx_hooks/branch/master/graph/badge.svg)](https://codecov.io/gh/yiss/mobx_hooks) ![Build](https://github.com/yiss/mobx_hooks/workflows/Build/badge.svg) [![pub package](https://img.shields.io/pub/v/mobx_hooks.svg)](https://pub.dartlang.org/packages/mobx_hooks)
 
-<img src="mobx_hooks.png" width="300">
+<img src="https://github.com/yiss/mobx_hooks/raw/master/mobx_hooks.png" width="300">
 
 # Mobx Hooks
 
@@ -11,9 +11,11 @@ Flutter Hooks for Mobx. This package attemp to bring [Flutter Hooks]() for [Mobx
 The motivation for this project started when I wanted to migrate an old project of mine from Mobx to Riverpod and Flutter Hooks. But as much as I enjoyed using Riverpod and Flutter Hooks, I missed the ease of use of Mobx. So as I looked for something that combines both, but I couldn't find any.
 
 #### Inspirations :
+
 This package was inspired and uses the following packages as dependecnies
-- [Flutter Hooks]() by [Remi Ressoulet]()
-- [MobX]() 
+
+- [Flutter Hooks](https://github.com/rrousselGit/flutter_hooks) by [Remi Ressoulet](https://github.com/rrousselGit)
+- [MobX](https://mobx.netlify.app/)
 
 ## Getting Started :
 
@@ -24,7 +26,7 @@ dependecies:
   mobx_hooks: latest
 ```
 
-## Exmaple :
+## Example :
 
 If you're familiar with MobX and Flutter Hooks, using MobX Hooks is very easy. Here is an example using a counter :
 
@@ -97,8 +99,8 @@ class MyHomePage extends HookWidget {
 
 This is the initial list of Hooks available in this package. More are coming soon.
 
-| Name | Description |
-|--|--|
-| [useObservable]() | Subscribes to an [Observable](https://mobx.netlify.app/api/observable) and return it's value |
-| [useCompute]() | Creates a Mobx [Computed](https://mobx.netlify.app/api/observable#computed) from the result of a function |
-| [useComputed]() | Subscribes to the value of a [Computed](https://mobx.netlify.app/api/observable#computed) |
+| Name              | Description                                                                                               |
+| ----------------- | --------------------------------------------------------------------------------------------------------- |
+| [useObservable]() | Subscribes to an [Observable](https://mobx.netlify.app/api/observable) and return it's value              |
+| [useCompute]()    | Creates a Mobx [Computed](https://mobx.netlify.app/api/observable#computed) from the result of a function |
+| [useComputed]()   | Subscribes to the value of a [Computed](https://mobx.netlify.app/api/observable#computed)                 |
