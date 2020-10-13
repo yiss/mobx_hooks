@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:mobx_hooks/mobx_hooks.dart';
-import 'package:mockito/mockito.dart';
 
 void main() {
   testWidgets('useComputed debugFillProperties', (tester) async {
