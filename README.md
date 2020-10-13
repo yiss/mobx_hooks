@@ -1,3 +1,5 @@
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/) ![codecov](https://codecov.io/gh/yiss/mobx_hooks/branch/master/graph/badge.svg) ![Build](https://github.com/yiss/mobx_hooks/workflows/Build/badge.svg)
+
 <img src="mobx_hooks.png" width="300">
 
 # Mobx Hooks
