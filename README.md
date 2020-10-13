@@ -4,9 +4,14 @@
 
 Flutter Hooks for Mobx. This package attemp to bring [Flutter Hooks]() for [Mobx]()
 
-## Motivation :
+## Motivation & Inspiration :
 
 The motivation for this project started when I wanted to migrate an old project of mine from Mobx to Riverpod and Flutter Hooks. But as much as I enjoyed using Riverpod and Flutter Hooks, I missed the ease of use of Mobx. So as I looked for something that combines both, but I couldn't find any.
+
+#### Inspirations :
+This package was inspired and uses the following packages as dependecnies
+- [Flutter Hooks]() by [Remi Ressoulet]()
+- [MobX]() 
 
 ## Getting Started :
 
@@ -88,4 +93,10 @@ class MyHomePage extends HookWidget {
 
 ## Hooks :
 
-// TODO
+This is the initial list of Hooks available in this package. More are coming soon.
+
+| Name | Description |
+|--|--|
+| [useObservable]() | Subscribes to an [Observable](https://mobx.netlify.app/api/observable) and return it's value |
+| [useCompute]() | Creates a Mobx [Computed](https://mobx.netlify.app/api/observable#computed) from the result of a function |
+| [useComputed]() | Subscribes to the value of a [Computed](https://mobx.netlify.app/api/observable#computed) |

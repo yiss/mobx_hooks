@@ -10,7 +10,7 @@ import 'package:mobx/mobx.dart';
 ///   Widget build(BuildContext context) {
 ///     final counter = Observable(0);
 ///     final value = useObservable(counterObservabe);
-///     
+///
 ///     return GestureDetector(
 ///       // automatically triggers a rebuild of Counter widget
 ///       onTap: () => counter.value++,
