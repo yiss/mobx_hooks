@@ -1,0 +1,19 @@
+name: mobx_hooks
+description: Flutter Hooks for Mobx
+version: 0.0.1
+homepage: https://github.com/yiss/mobx_hooks
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.17.0 <2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  mobx: ^1.2.1+3
+  flutter_hooks: ^0.14.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockito: ">=4.0.0 <5.0.0"
