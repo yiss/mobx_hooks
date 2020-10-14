@@ -56,7 +56,7 @@ void main() {
     runInAction(() {
       firstName.value = 'Venus';
     });
-    
+
     await tester.pump();
     expect(firstName.value, 'Venus');
     expect(lastName.value, 'Williams');

@@ -5,4 +5,3 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 // import 'internal.dart';
 
 part 'computed.dart';
-

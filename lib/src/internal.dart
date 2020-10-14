@@ -62,8 +62,8 @@ abstract class StatefulObserverHookWidget extends StatefulWidget
 }
 
 class _StatefulObserverHookElement extends StatefulElement
-    // ignore: invalid_use_of_visible_for_testing_member
     with
+        // ignore: invalid_use_of_visible_for_testing_member
         HookElement,
         ObserverElementMixin {
   _StatefulObserverHookElement(StatefulObserverHookWidget hooks) : super(hooks);
