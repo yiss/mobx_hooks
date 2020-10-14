@@ -9,74 +9,71 @@ import 'package:mobx_hooks/mobx_hooks.dart';
 void main() {
   testWidgets('useComputed debugFillProperties', (tester) async {
     final observable = Observable(0);
-    final computed = Computed(() => observable.value.isEven);
     await tester.pumpWidget(
-      HookBuilder(builder: (context) {
-        useComputed(computed);
+      ObserverHookBuilder(builder: (context) {
+        useComputed(() {
+          return observable.value.isEven;
+        }, [observable]);
         return const SizedBox();
       }),
     );
 
     await tester.pump();
 
-    final element = tester.element(find.byType(HookBuilder));
+    final element = tester.element(find.byType(ObserverHookBuilder));
 
     expect(
       element
           .toDiagnosticsNode(style: DiagnosticsTreeStyle.offstage)
           .toStringDeep(),
       equalsIgnoringHashCodes(
-        'HookBuilder\n'
-        ' │ useComputed<bool>: true\n'
+        'ObserverHookBuilder\n'
+        ' │ useComputed<bool>: Computed<bool>(true)\n'
         ' └SizedBox(renderObject: RenderConstrainedBox#00000)\n',
       ),
     );
   });
 
-  testWidgets('useComputed value changes when change observable',
-      (tester) async {
-    final counter = Observable(0);
-    final counterParity = Computed(() => counter.value.isEven);
-    bool parityCheck;
+  testWidgets('useComputed compute value from', (tester) async {
+    final firstName = Observable('Serena');
+    final lastName = Observable('Williams');
+    Computed<String> fullName;
     var buildCount = 0;
 
-    await tester.pumpWidget(HookBuilder(
+    await tester.pumpWidget(ObserverHookBuilder(
       builder: (context) {
         buildCount++;
-        parityCheck = useComputed(counterParity);
+        fullName = useComputed(() {
+          return '${firstName.value} ${lastName.value}';
+        });
         return Container();
       },
     ));
-    expect(counter.value, 0);
-    expect(counterParity.value, true);
-    expect(parityCheck, true);
-    expect(buildCount, 1);
+    expect(firstName.value, 'Serena');
+    expect(lastName.value, 'Williams');
+    expect(fullName.value, 'Serena Williams');
 
-    runInAction(() => counter.value = 7);
+    runInAction(() {
+      firstName.value = 'Venus';
+    });
+    
     await tester.pump();
-    expect(counter.value, 7);
-    expect(counterParity.value, false);
-    expect(buildCount, 2);
+    expect(firstName.value, 'Venus');
+    expect(lastName.value, 'Williams');
+    expect(fullName.value, 'Venus Williams');
+    // Make sure the change doesnt trigger rebuild
+    expect(buildCount, 1);
   });
 
-  testWidgets('useComputed triggers rebuild', (tester) async {
-    var buildCount = 0;
-    final counter = Observable(1);
-    var counterValue = 0;
-    Widget Function(BuildContext) builder(Observable<int> observable) {
-      return (context) {
-        buildCount++;
-        counterValue = useObservable(observable);
+  testWidgets('useComputed raise error when compute function is null',
+      (tester) async {
+    // Use HookBuilder because we don't have any Observables
+    await tester.pumpWidget(HookBuilder(
+      builder: (context) {
+        useComputed<String>(null);
         return Container();
-      };
-    }
-
-    await tester.pumpWidget(HookBuilder(builder: builder(counter)));
-    expect(counterValue, 1);
-
-    counter.value = 8;
-    await tester.pumpWidget(HookBuilder(builder: builder(counter)));
-    expect(counterValue, 8);
-    expect(buildCount, 2);
+      },
+    ));
+    expect(tester.takeException(), isAssertionError);
   });
 }
