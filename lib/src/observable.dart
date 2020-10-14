@@ -1,6 +1,4 @@
-import 'package:flutter/widgets.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:mobx/mobx.dart';
+part of 'hooks.dart';
 
 /// Subscribes to an [Observable] and return it's value
 /// The following example is basic counter application

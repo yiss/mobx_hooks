@@ -10,7 +10,7 @@ void main() {
   testWidgets('useCompute debugFillProperties', (tester) async {
     final observable = Observable(0);
     await tester.pumpWidget(
-      HookBuilder(builder: (context) {
+      ObserverHookBuilder(builder: (context) {
         useCompute(() {
           return observable.value.isEven;
         }, [observable]);
@@ -20,14 +20,14 @@ void main() {
 
     await tester.pump();
 
-    final element = tester.element(find.byType(HookBuilder));
+    final element = tester.element(find.byType(ObserverHookBuilder));
 
     expect(
       element
           .toDiagnosticsNode(style: DiagnosticsTreeStyle.offstage)
           .toStringDeep(),
       equalsIgnoringHashCodes(
-        'HookBuilder\n'
+        'ObserverHookBuilder\n'
         ' │ useCompute<bool>: Computed<bool>(true)\n'
         ' └SizedBox(renderObject: RenderConstrainedBox#00000)\n',
       ),
@@ -40,7 +40,7 @@ void main() {
     Computed<String> fullName;
     var buildCount = 0;
 
-    await tester.pumpWidget(HookBuilder(
+    await tester.pumpWidget(ObserverHookBuilder(
       builder: (context) {
         buildCount++;
         fullName = useCompute(() {
@@ -64,13 +64,13 @@ void main() {
 
   testWidgets('useCompute raise error when compute function is null',
       (tester) async {
+    // Use HookBuilder because we don't have any Observables
     await tester.pumpWidget(HookBuilder(
       builder: (context) {
-        useCompute<String>(null, const []);
+        useCompute<String>(null);
         return Container();
       },
     ));
-
     expect(tester.takeException(), isAssertionError);
   });
 }
