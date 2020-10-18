@@ -6,3 +6,4 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 part 'computed.dart';
 part 'reaction.dart';
+part 'autorun.dart';
