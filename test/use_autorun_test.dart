@@ -42,7 +42,7 @@ void main() {
     });
 
     await tester.pumpWidget(widget);
-    expect(counter.value, 0);
+    expect(counter.value, 1);
   });
 
   testWidgets('HookObserverWidget will fail when useAutorun is null',
@@ -63,15 +63,14 @@ void main() {
     expect((exception as FlutterError).stackTrace, isNotNull);
   });
 
-  testWidgets('autorun changing parameters call callback', (tester) async {
-    final mockAutorun = MockAutorun();
+  testWidgets('autorun is immediately called', (tester) async {
+    final autorunned = MockAutorun();
     final unrelated = MockWidgetBuild();
     List<Object> parameters;
 
     Widget builder() {
       return ObserverHookBuilder(builder: (context) {
-        print('lololo');
-        useAutorun(mockAutorun, parameters);
+        useAutorun(autorunned, parameters);
         unrelated();
         return Container();
       });
@@ -80,20 +79,53 @@ void main() {
     parameters = ['foo'];
     await tester.pumpWidget(builder());
 
-    // verifyInOrder([
-    //   mockAutorun(),
-    //   // unrelated(),
-    // ]);
-    // verifyNoMoreInteractions(mockAutorun);
+    verify(autorunned()).called(1);
+    verify(unrelated()).called(1);
 
-    // parameters = ['bar'];
-    // await tester.pumpWidget(builder());
+    verifyNoMoreInteractions(autorunned);
 
-    // verifyInOrder([
-    //   mockAutorun(),
-    //   // unrelated(),
-    // ]);
-    // verifyNoMoreInteractions(mockAutorun);
+    parameters = ['bar'];
+    await tester.pumpWidget(builder());
+
+    verify(autorunned()).called(1);
+    verify(unrelated()).called(1);
+
+    verifyNoMoreInteractions(autorunned);
+
+    parameters = null;
+    await tester.pumpWidget(builder());
+
+    verify(autorunned()).called(1);
+    verify(unrelated()).called(1);
+
+    verifyNoMoreInteractions(autorunned);
+  });
+
+  testWidgets('autorun is called when an observable has changed',
+      (tester) async {
+    final autorunDispoerMock = MockAutorunDispoer<int>();
+    final counter = Observable(0);
+    final widget = ObserverHookBuilder(builder: (c) {
+      useAutorun(() {
+        autorunDispoerMock(counter.value);
+      });
+      return Container();
+    });
+
+    await tester.pumpWidget(widget);
+
+    // useAutorun runs immediatly
+    verify(autorunDispoerMock(0)).called(1);
+
+    verifyNoMoreInteractions(autorunDispoerMock);
+
+    runInAction(() {
+      counter.value = 5;
+    });
+
+    await tester.pumpWidget(widget);
+
+    verify(autorunDispoerMock(5)).called(1);
   });
 }
 
@@ -103,4 +135,8 @@ class MockAutorun extends Mock {
 
 class MockWidgetBuild extends Mock {
   void call();
+}
+
+class MockAutorunDispoer<T> extends Mock {
+  void call(T value);
 }

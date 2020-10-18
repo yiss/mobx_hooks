@@ -42,22 +42,11 @@ class _AutorunHookState extends HookState<void, _AutorunHook> {
   @override
   void initHook() {
     super.initHook();
+    scheduleAutorun();
   }
 
   void scheduleAutorun() {
     disposer = autorun((_) => hook.fn());
-  }
-
-  @override
-  void didUpdateHook(_AutorunHook oldHook) {
-    super.didUpdateHook(oldHook);
-
-    if (hook.keys == null) {
-      if (disposer != null) {
-        disposer();
-      }
-      scheduleAutorun();
-    }
   }
 
   @override
